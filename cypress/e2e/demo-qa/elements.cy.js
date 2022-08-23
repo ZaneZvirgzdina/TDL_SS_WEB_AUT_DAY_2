@@ -1,3 +1,4 @@
+import CheckBoxPage from "../../pageObjects/checkBoxPage";
 import TextBoxPage from "../../pageObjects/textBoxPage";
 
 context("Elements Page", () => {
@@ -7,18 +8,19 @@ context("Elements Page", () => {
     });
 
     // Create texbox scenario
-    // fill in textboxes with necessary information
-    // validate the paragraphs
-    it.only("Filling in Text Boxes", () => {
+
+    it("Filling in Text Boxes", () => {
+      // fill in textboxes with necessary information
       TextBoxPage.fullNameField.click();
       TextBoxPage.fullNameField.type('Name Surname');
       TextBoxPage.emailField.click();
-      TextBoxPage.emailField.type('email@email.com')
+      TextBoxPage.emailField.type('email@email.com');
       TextBoxPage.currentAddressField.click();
       TextBoxPage.currentAddressField.type('This is an address');
       TextBoxPage.permanentAddressField.click();
       TextBoxPage.permanentAddressField.type('Another address - permanent one');
       TextBoxPage.submitButton.click();
+       // validate the paragraphs
       TextBoxPage.validateName.should('contain.text', 'Name Surname');
       TextBoxPage.validateEmail.should('contain.text', 'email@email.com');
       TextBoxPage.validateCurrentAddress.should('contain.text', 'This is an address');
@@ -27,16 +29,47 @@ context("Elements Page", () => {
   });
 
   context("Check box scenarios", () => {
-    // Create CheckBoxPage page object
+    beforeEach(() => {
+      CheckBoxPage.visit();
+    });
     // Create checkbox scenario 1:
+    it('Check box scenario 1', () => {
     // Click the "+"/expand button
+    CheckBoxPage.expandButton.click();
     // Click Notes, React, Angular, General, Excel File.doc
-    // Validate the clicked checkboxes
-
+    CheckBoxPage.checkboxTitles.contains('Notes').click();
+    CheckBoxPage.checkboxTitles.contains('React').click();
+    CheckBoxPage.checkboxTitles.contains('Angular').click();
+    CheckBoxPage.checkboxTitles.contains('General').click();
+    CheckBoxPage.checkboxTitles.contains('Excel File.doc').click();
+    // Validate the clicked checkboxes 
+    CheckBoxPage.checkboxNotes.should('be.checked');
+    CheckBoxPage.checkboxReact.should('be.checked');
+    CheckBoxPage.checkboxAngular.should('be.checked');
+    CheckBoxPage.checkboxGeneral.should('be.checked');
+    CheckBoxPage.checkboxExcel.should('be.checked');
+    // Validate the clicked checkboxes as intended by the task (via message below):
+    CheckBoxPage.checkboxCheck.contains('notes');
+    CheckBoxPage.checkboxCheck.contains('react');
+    CheckBoxPage.checkboxCheck.contains('angular');
+    CheckBoxPage.checkboxCheck.contains('general');
+    CheckBoxPage.checkboxCheck.contains('excelFile');
+    });
+    
+   
     // Create checkbox scenario 2:
+    it.only('check checkbox scenario 2', ()=>{
     // Click expand button
+    CheckBoxPage.expandButton.click();
     // Click Office
+    CheckBoxPage.checkboxTitles.contains('Office').click();
     // Validate the checked checkboxes
+    CheckBoxPage.checkboxCheck.contains('office');
+    CheckBoxPage.checkboxCheck.contains('public');
+    CheckBoxPage.checkboxCheck.contains('private');
+    CheckBoxPage.checkboxCheck.contains('classified');
+    CheckBoxPage.checkboxCheck.contains('general');
+    });
   });
 
   context("Radio button scenarios", () => {
