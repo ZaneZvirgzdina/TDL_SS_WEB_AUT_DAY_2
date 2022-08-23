@@ -1,6 +1,8 @@
+import BasePage from "../../pageObjects/basePage";
 import CheckBoxPage from "../../pageObjects/checkBoxPage";
 import RadioButtonPage from "../../pageObjects/radioButtonPage";
 import TextBoxPage from "../../pageObjects/textBoxPage";
+import WebTablesPage from "../../pageObjects/webTablesPage";
 
 context("Elements Page", () => {
   context("Text box scenarios", () => {
@@ -20,7 +22,7 @@ context("Elements Page", () => {
       TextBoxPage.currentAddressField.type('This is an address');
       TextBoxPage.permanentAddressField.click();
       TextBoxPage.permanentAddressField.type('Another address - permanent one');
-      TextBoxPage.submitButton.click();
+      BasePage.submitButton.click();
        // validate the paragraphs
       TextBoxPage.validateName.should('contain.text', 'Name Surname');
       TextBoxPage.validateEmail.should('contain.text', 'email@email.com');
@@ -78,7 +80,7 @@ context("Elements Page", () => {
       RadioButtonPage.visit();
     });
      // Scenario 1:
-    it.only('check radio button scenario 1', () => {
+    it('check radio button scenario 1', () => {
       // Click yesButton
       // RadioButtonPage.yesRadio.click(); // regular approach
       RadioButtonPage.radioButtons.contains('Yes').click(); // improved approach
@@ -96,17 +98,46 @@ context("Elements Page", () => {
   });
 
   context("Web tables scenarios", () => {
-    // Create WebTables page object
+    beforeEach(() => {
+      WebTablesPage.visit();
+    });
     // Create scenario 1:
-    // Click add record button
-    // fill in the necessary information
-    // click submit button
-    // search for the user based on previously added information
-    // validate tha the user is visible
-
+    it('check web tables scenario 1', () => {
+      // Click add record button
+      WebTablesPage.addUser.click();
+      // fill in the necessary information
+      WebTablesPage.firstName.click();
+      WebTablesPage.firstName.type('Zane');
+      WebTablesPage.lastName.click();
+      WebTablesPage.lastName.type('Mazenko');
+      WebTablesPage.emailForm.click();
+      WebTablesPage.emailForm.type('email@email.com');
+      WebTablesPage.userAge.click();
+      WebTablesPage.userAge.type(18);
+      WebTablesPage.salary.click();
+      WebTablesPage.salary.type(3000);
+      WebTablesPage.department.click();
+      WebTablesPage.department.type('Manual testing');
+      // click submit button
+      BasePage.submitButton.click();
+      // search for the user based on previously added information
+      WebTablesPage.searchBox.click();
+      WebTablesPage.searchBox.type('Zane');
+      // validate tha the user is visible
+      WebTablesPage.row.should('contain.text', 'Zane')
+      WebTablesPage.row.should('contain.text', 'Mazenko');
+    });
+    
     // Create Scenario 2:
-    // Delete all table rows
+    it.only('check web tables scenario 2', () => {
+      // Delete all table rows
+      ['Cierra', 'Alden', 'Kierra'].forEach((name) => {
+      WebTablesPage.deleteUser(name);
+      });
     // Validate that we see text - No rows found
+      WebTablesPage.row.should('contain.text','');
+    })
+    
   });
 
   context("Buttons scenarios", () => {

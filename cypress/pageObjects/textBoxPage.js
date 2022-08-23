@@ -21,10 +21,6 @@ class TextBoxPage extends BasePage {
     return cy.get("#permanentAddress")
   }
 
-  static get submitButton(){
-    return cy.get('#submit')
-  }
-
   static get validateName(){
     return cy.get("#name")
   }
