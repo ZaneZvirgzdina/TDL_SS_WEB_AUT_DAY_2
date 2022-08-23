@@ -1,4 +1,5 @@
 import CheckBoxPage from "../../pageObjects/checkBoxPage";
+import RadioButtonPage from "../../pageObjects/radioButtonPage";
 import TextBoxPage from "../../pageObjects/textBoxPage";
 
 context("Elements Page", () => {
@@ -58,7 +59,7 @@ context("Elements Page", () => {
     
    
     // Create checkbox scenario 2:
-    it.only('check checkbox scenario 2', ()=>{
+    it('check checkbox scenario 2', ()=>{
     // Click expand button
     CheckBoxPage.expandButton.click();
     // Click Office
@@ -73,13 +74,25 @@ context("Elements Page", () => {
   });
 
   context("Radio button scenarios", () => {
-    // Create RadioButtons page object
-    // Scenario 1:
-    // Click yesButton
-    // validate the message
+    beforeEach(() => {
+      RadioButtonPage.visit();
+    });
+     // Scenario 1:
+    it.only('check radio button scenario 1', () => {
+      // Click yesButton
+      // RadioButtonPage.yesRadio.click(); // regular approach
+      RadioButtonPage.radioButtons.contains('Yes').click(); // improved approach
+      // validate the message
+      RadioButtonPage.message.contains('Yes');
     // click impressiveButton
+    // RadioButtonPage.impressiveRadio.click(); // regular approach
+    RadioButtonPage.radioButtons.contains('Impressive').click();
     // validate the message
+    RadioButtonPage.message.contains('Impressive');
     // noButton - validate that the button exists but is disabled
+    RadioButtonPage.radioButtonDisabled.click();
+    });
+   
   });
 
   context("Web tables scenarios", () => {
