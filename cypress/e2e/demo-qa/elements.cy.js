@@ -9,8 +9,20 @@ context("Elements Page", () => {
     // Create texbox scenario
     // fill in textboxes with necessary information
     // validate the paragraphs
-    it("Filling in Text Boxes", () => {
-      // add the necessary steps
+    it.only("Filling in Text Boxes", () => {
+      TextBoxPage.fullNameField.click();
+      TextBoxPage.fullNameField.type('Name Surname');
+      TextBoxPage.emailField.click();
+      TextBoxPage.emailField.type('email@email.com')
+      TextBoxPage.currentAddressField.click();
+      TextBoxPage.currentAddressField.type('This is an address');
+      TextBoxPage.permanentAddressField.click();
+      TextBoxPage.permanentAddressField.type('Another address - permanent one');
+      TextBoxPage.submitButton.click();
+      TextBoxPage.validateName.should('contain.text', 'Name Surname');
+      TextBoxPage.validateEmail.should('contain.text', 'email@email.com');
+      TextBoxPage.validateCurrentAddress.should('contain.text', 'This is an address');
+      TextBoxPage.validatePermanentAddress.should('contain.text', 'Another address - permanent one');
     });
   });
 
